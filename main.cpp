@@ -36,11 +36,13 @@ int main() {
     endProgressBar();
     printf("Processing finished\n");
 
+    printf("Input sentence: ");
     string sentence;
     while (getline(cin, sentence)) {
         vector<string> wordSequence = splitSentence(sentence);
         double probability = sentenceValidProbability(wordSequence);
         cout << "Probability: " << probability << endl;
+        printf("Input sentence: ");
     }
 
     return 0;
