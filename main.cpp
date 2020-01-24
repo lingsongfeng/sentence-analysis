@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <cstdio>
+#include <algorithm>
 
 using namespace std;
 
@@ -90,13 +91,9 @@ int numberOfAdjacency(const string& first, const string& second) {
     const auto locations1 = iter1->second;
     const auto locations2 = iter2->second;
     for (int i = 0; i < locations1.size(); i++) {
-        for (int j = 0; j < locations2.size(); j++) {
-            if (locations1[i] + 1 < locations2[j]) {
-                continue;
-            }
-            if (locations1[i] + 1 == locations2[j]) {
-                ret++;
-            }
+        auto ptr = lower_bound(locations2.begin(), locations2.end(), locations1[i] + 1);
+        if (*ptr == locations1[i] + 1) {
+            ret++;
         }
     }
     return ret;
