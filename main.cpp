@@ -18,7 +18,7 @@ double sentenceValidProbability(const vector<string>& sentence);
 int numberOfAdjacency(const string& first, const string& second);
 void showProgressBar(int current, int total);
 void endProgressBar();
-vector<string> splitSentence(const string& sentence);
+vector<string> splitSentence(string& sentence);
 
 int main() {
     printf("\nReading files...\n");
@@ -46,7 +46,13 @@ int main() {
     return 0;
 }
 
-vector<string> splitSentence(const string& sentence) {
+vector<string> splitSentence(string& sentence) {
+    for (int i = 0; i < sentence.size(); i++) {
+        if (!(('a' <= sentence[i] && sentence[i] <= 'z') ||
+        ('A' <= sentence[i] && sentence[i] <= 'Z'))) {
+            sentence[i] = ' ';
+        }
+    }
     vector<string> ret;
     vector<string> splitedUnits;
     stringstream ss(sentence);
