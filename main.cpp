@@ -5,6 +5,7 @@
 #include <map>
 #include <cstdio>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 
@@ -17,9 +18,10 @@ double sentenceValidProbability(const vector<string>& sentence);
 int numberOfAdjacency(const string& first, const string& second);
 void showProgressBar(int current, int total);
 void endProgressBar();
+vector<string> splitSentence(const string& sentence);
 
 int main() {
-    printf("Reading files...\n");
+    printf("\nReading files...\n");
     vector<string> words = readFile();
     printf("Reading finished\nProcessing files...\n");
 
@@ -34,18 +36,31 @@ int main() {
     endProgressBar();
     printf("Processing finished\n");
 
-    string word;
-    vector<string> sentence;
-    while (cin >> word) {
-        sentence.push_back(word);
+    string sentence;
+    while (getline(cin, sentence)) {
+        vector<string> wordSequence = splitSentence(sentence);
+        double probability = sentenceValidProbability(wordSequence);
+        cout << "Probability: " << probability << endl;
     }
 
-    double probability = sentenceValidProbability(sentence);
-    cout << "Probability: " << probability << endl;
-    
     return 0;
 }
 
+vector<string> splitSentence(const string& sentence) {
+    vector<string> ret;
+    vector<string> splitedUnits;
+    stringstream ss(sentence);
+    string unit;
+    while (ss >> unit) {
+        splitedUnits.push_back(unit);
+    }
+    for (int i = 0; i < splitedUnits.size(); i++) {
+        if (isWord(splitedUnits[i])) {
+            ret.push_back(toLower(splitedUnits[i]));
+        }
+    }
+    return ret;
+}
 void showProgressBar(int progressBarCount, int progressBarTotal) {
     char bar[64] = "                                                  ";
 
