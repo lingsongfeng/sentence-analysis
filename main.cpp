@@ -42,9 +42,10 @@ int main() {
         vector<string> wordSequence = splitSentence(sentence);
         double probability = sentenceValidProbability(wordSequence);
         cout << "Probability: " << probability << endl;
-        printf("Input sentence: ");
+        printf("Input sentence (Ctrl-D to exit): ");
     }
-
+    printf("\n");
+    
     return 0;
 }
 
@@ -139,18 +140,25 @@ string toLower(const string& str) {
     }
     return ret;
 }
+void getFileList(vector<string>& fileList) {
+    string dir = "text0/";
+    ifstream infile;
+    infile.open("fileList.txt");
+    string fileName;
+    while (infile >> fileName) {
+        fileList.push_back(dir + fileName);
+    }
+    infile.close();
+}
 vector<string> readFile() {
     vector<string> fileList;
-    fileList.push_back("text0/9053.txt");
-    fileList.push_back("text0/12053.txt");
-    fileList.push_back("text0/17053.txt");
-    fileList.push_back("text0/19053.txt");
-    fileList.push_back("text0/27053.txt");
-    fileList.push_back("text0/33053.txt");
-    fileList.push_back("text0/46053.txt");
+    getFileList(fileList);
 
     vector<string> words;
+    int cnt = 0;
     for (auto fileName: fileList) {
+        cnt++;
+        showProgressBar(cnt, fileList.size());
         ifstream infile;
         infile.open(fileName);
         string word;
@@ -162,5 +170,6 @@ vector<string> readFile() {
         words.push_back("_");
         infile.close();
     }
+    endProgressBar();
     return words;
 }
