@@ -36,7 +36,7 @@ int main() {
     endProgressBar();
     printf("Processing finished\n");
 
-    printf("Input sentence: ");
+    printf("Input sentence (Ctrl-D to exit): ");
     string sentence;
     while (getline(cin, sentence)) {
         vector<string> wordSequence = splitSentence(sentence);
