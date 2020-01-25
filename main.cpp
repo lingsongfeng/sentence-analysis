@@ -115,7 +115,7 @@ int numberOfAdjacency(const string& first, const string& second) {
     const auto locations2 = iter2->second;
     for (int i = 0; i < locations1.size(); i++) {
         auto ptr = lower_bound(locations2.begin(), locations2.end(), locations1[i] + 1);
-        if (*ptr == locations1[i] + 1) {
+        if (ptr != locations2.end() && *ptr == locations1[i] + 1) {
             ret++;
         }
     }
